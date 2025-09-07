@@ -87,27 +87,41 @@ public class DemandeInterventionService {
 
 
     // Mettre à jour une demande
-  /* public DemandeInterventionDTO updateDemande(Long id, DemandeInterventionDTO dto) {
+    public DemandeInterventionDTO updateDemande(Long id, DemandeInterventionDTO dto) {
         return repository.findById(id).map(demande -> {
-            demande.setDescription(dto.getDescription());
-            demande.setDateDemande(dto.getDateDemande());
-            demande.setStatut(dto.getStatut());
-            demande.setPriorite(dto.getPriorite());
-            demande.setDemandeur(userRepository.findById(dto.getDemandeurId()).orElse(null));
+            // Mise à jour des champs fournis
+            if (dto.getDescription() != null) {
+                demande.setDescription(dto.getDescription());
+            }
+            if (dto.getDateDemande() != null) {
+                demande.setDateDemande(dto.getDateDemande());
+            }
+            if (dto.getStatut() != null) {
+                demande.setStatut(dto.getStatut());
+            }
+            if (dto.getPriorite() != null) {
+                demande.setPriorite(dto.getPriorite());
+            }
+            if (dto.getDemandeurId() != null) {
+                demande.setDemandeur(userRepository.findById(dto.getDemandeurId()).orElse(null));
+            }
+            
             DemandeIntervention updatedDemande = repository.save(demande);
 
-            return new DemandeInterventionDTO(
-                    updatedDemande.getId(),
-                    updatedDemande.getDescription(),
-                    updatedDemande.getDateDemande(),
-                    updatedDemande.getStatut(),
-                    updatedDemande.getPriorite(),
-                    updatedDemande.getDemandeur() != null ? updatedDemande.getDemandeur().getId() : null,
-                    "INCONNU"
-            );
+            // Créer le DTO de retour
+            DemandeInterventionDTO responseDto = new DemandeInterventionDTO();
+            responseDto.setId(updatedDemande.getId());
+            responseDto.setDescription(updatedDemande.getDescription());
+            responseDto.setDateDemande(updatedDemande.getDateDemande());
+            responseDto.setStatut(updatedDemande.getStatut());
+            responseDto.setPriorite(updatedDemande.getPriorite());
+            responseDto.setDemandeurId(updatedDemande.getDemandeur() != null ? updatedDemande.getDemandeur().getId() : null);
+            responseDto.setTypeDemande(updatedDemande.getType_demande());
+
+            return responseDto;
 
         }).orElseThrow(() -> new RuntimeException("Demande non trouvée"));
-    }*/
+    }
 
     // Supprimer une demande
     public void deleteDemande(Long id) {

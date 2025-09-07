@@ -86,7 +86,6 @@ public class DemandeInterventionController {
         List<DemandeInterventionDTO> demandes = demandeInterventionService.getAllDemandes();
         return new ResponseEntity<>(demandes, HttpStatus.OK);
     }
-/*
     @PutMapping("/update/{id}")
     public ResponseEntity<DemandeInterventionDTO> updateDemande(@PathVariable Long id, @RequestBody DemandeInterventionDTO dto) {
         try {
@@ -96,7 +95,6 @@ public class DemandeInterventionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-*/
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteDemande(@PathVariable Long id) {
         demandeInterventionService.deleteDemande(id);
