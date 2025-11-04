@@ -1,4 +1,4 @@
-package tn.esprit.PI.service;
+package tn.esprit.PI.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class UserStatisticsService {
 
-    @Autowired
+  /*  @Autowired
     private UserStatisticsRepository userStatisticsRepository;
 
     @Autowired
@@ -165,5 +165,5 @@ public class UserStatisticsService {
 
     public Long getUnreadNotificationsCount(Long userId) {
         return notificationRepository.countByRecipientIdAndIsRead(userId, false);
-    }
+    }*/
 }

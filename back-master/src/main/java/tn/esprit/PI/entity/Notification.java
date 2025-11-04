@@ -34,6 +34,12 @@ public class Notification implements Serializable {
     @Column(name = "is_read", nullable = false)
     private Boolean isRead = false;
 
+    @Column(name = "priority", nullable = false)
+    private String priority = "NORMAL"; // NORMAL, HIGH, LOW
+
+    @Column(name = "status", nullable = false)
+    private String status = "UNREAD"; // UNREAD, READ, ARCHIVED
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

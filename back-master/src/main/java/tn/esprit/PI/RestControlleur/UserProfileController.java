@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.PI.entity.*;
-import tn.esprit.PI.service.UserStatisticsService;
 import tn.esprit.PI.repository.*;
+import tn.esprit.PI.Services.UserStatisticsService;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +17,15 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class UserProfileController {
 
-    @Autowired
-    private UserStatisticsService userStatisticsService;
 
-    @Autowired
+  /*  @Autowired
     private NotificationRepository notificationRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserStatisticsService userStatisticsService;
 
     @GetMapping("/{userId}/statistics")
     @ApiOperation(value = "Récupérer les statistiques d'un utilisateur", response = UserStatistics.class)
@@ -217,5 +217,5 @@ public class UserProfileController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-    }
+    }*/
 }

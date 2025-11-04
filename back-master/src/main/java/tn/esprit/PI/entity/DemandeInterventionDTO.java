@@ -21,6 +21,13 @@ public class DemandeInterventionDTO {
     private Boolean urgence;
     private String frequence;
     private Date prochainRDV;
+    
+    // Additional fields to match entity
+    private Date dateCreation;
+    private Date dateValidation;
+    private Integer confirmation;
+    private String testeurCodeGMAO;
+    private Long technicienAssigneId;
 
     // Constructeur avec tous les paramètres
     public DemandeInterventionDTO(Long id, String description, Date dateDemande, StatutDemande statut,

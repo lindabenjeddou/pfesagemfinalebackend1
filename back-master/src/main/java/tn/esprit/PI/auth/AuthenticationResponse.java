@@ -14,11 +14,16 @@ public class AuthenticationResponse {
 
   @JsonProperty("access_token")
   private String accessToken;
+  @JsonProperty("token") // Ajouter pour compatibilité frontend
+  private String token;
   @JsonProperty("refresh_token")
   private String refreshToken;
   private String error;
   private Long userId;
   private String role;
   private Integer confirmation;
+  private String email;
+  private String firstName;
+  private String lastName;
 
 }

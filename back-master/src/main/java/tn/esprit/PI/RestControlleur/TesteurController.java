@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.PI.Services.TesteurService;
 import tn.esprit.PI.entity.Testeur;
+import tn.esprit.PI.entity.TesteurDTO;
 
 import java.util.List;
 
@@ -23,11 +24,17 @@ public class TesteurController {
         return ResponseEntity.ok(createdTesteur);
     }
 
-    // Récupérer tous les testeurs
+    // Récupérer tous les testeurs (avec DTO pour éviter sérialisation circulaire)
     @GetMapping("/all")
-    public ResponseEntity<List<Testeur>> getAllTesteurs() {
-        List<Testeur> testeurs = testeurService.getAllTesteurs();
-        return ResponseEntity.ok(testeurs);
+    public ResponseEntity<List<TesteurDTO>> getAllTesteurs() {
+        try {
+            List<TesteurDTO> testeurs = testeurService.getAllTesteursDTO();
+            return ResponseEntity.ok(testeurs);
+        } catch (Exception e) {
+            System.out.println("❌ Erreur lors de la récupération des testeurs: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     // Mettre à jour un testeur

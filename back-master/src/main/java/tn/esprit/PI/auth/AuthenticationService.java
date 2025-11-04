@@ -91,9 +91,14 @@ public class AuthenticationService {
 
       return AuthenticationResponse.builder()
               .accessToken(jwtToken)
+              .token(jwtToken) // Ajouter pour compatibilité frontend
               .refreshToken(refreshToken)
               .userId(user.getId())
-              .role(userRole) // Set the user role
+              .role(userRole)
+              .email(user.getEmail())
+              .firstName(user.getFirstname())
+              .lastName(user.getLastname())
+              .confirmation(user.getConfirmation())
               .build();
     } catch (BadCredentialsException ex) {
       // Handle authentication failure (invalid credentials)

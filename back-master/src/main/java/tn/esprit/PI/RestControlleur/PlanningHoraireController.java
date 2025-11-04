@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.PI.Services.PlanningHoraireService;
 import tn.esprit.PI.entity.PlanningHoraire;
 import tn.esprit.PI.entity.PlanningHoraireDTO;
+import tn.esprit.PI.entity.User;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -89,6 +93,46 @@ public class PlanningHoraireController {
             return ResponseEntity.ok(dtoList);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erreur serveur : " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Endpoint pour récupérer les techniciens disponibles à une date donnée
+     * URL: /PI/planningHoraire/techniciens-disponibles?date=2025-11-02
+     */
+    @GetMapping("/techniciens-disponibles")
+    public ResponseEntity<?> getTechniciensDisponibles(@RequestParam String date) {
+        try {
+            // Parser la date (format attendu: yyyy-MM-dd)
+            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+            
+            // Récupérer les techniciens disponibles
+            List<User> techniciensDisponibles = planningHoraireService.getTechniciensDisponibles(localDate);
+            
+            // Créer un DTO simple pour la réponse
+            List<Map<String, Object>> techniciensDTOs = techniciensDisponibles.stream()
+                    .map(t -> {
+                        Map<String, Object> techMap = new java.util.HashMap<>();
+                        techMap.put("id", t.getId());
+                        techMap.put("firstName", t.getFirstname() != null ? t.getFirstname() : "");
+                        techMap.put("lastName", t.getLastname() != null ? t.getLastname() : "");
+                        techMap.put("role", t.getRole().name());
+                        techMap.put("email", t.getEmail() != null ? t.getEmail() : "");
+                        return techMap;
+                    })
+                    .collect(Collectors.toList());
+            
+            Map<String, Object> response = new java.util.HashMap<>();
+            response.put("date", date);
+            response.put("nombreDisponibles", techniciensDTOs.size());
+            response.put("techniciens", techniciensDTOs);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new java.util.HashMap<>();
+            errorResponse.put("error", "Erreur lors de la récupération des techniciens disponibles");
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 }

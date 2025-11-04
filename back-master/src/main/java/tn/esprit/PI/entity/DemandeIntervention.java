@@ -3,10 +3,8 @@ package tn.esprit.PI.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -35,11 +33,29 @@ public class DemandeIntervention implements Serializable {
 
     private String priorite;
 
+    // Additional fields based on system requirements
+    @CreationTimestamp
+    private Date dateCreation;
+    
+    private Date dateValidation;
+    
+    private Integer confirmation = 0; // 0 = non confirmé, 1 = confirmé
 
+    // Relationships
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "demandeur")
     @JsonBackReference
     private User demandeur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "testeur_code_gmao")
+    @JsonBackReference
+    private Testeur testeur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "technicien_id")
+    private User technicienAssigne;
+
 }
 
